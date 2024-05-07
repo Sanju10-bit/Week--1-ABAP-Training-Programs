@@ -1,0 +1,124 @@
+*&---------------------------------------------------------------------*
+*& Report ZTRUPEN_UST_SELECT_STMT
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT ztrupen_ust_select_stmt.
+
+*******# 1
+*TABLES kna1.
+*
+*data: lv_kunnr TYPE kna1-kunnr, " Customer Number
+*      lv_name1 type kna1-name1, " Name 1
+*      lv_ort01 TYPE kna1-ort01, " city
+*      lv_land1 TYPE kna1-land1. " country
+*
+*select kunnr name1 ort01 land1
+*       into ( lv_kunnr, lv_name1 , lv_ort01 , lv_land1 )
+*       from kna1
+*       WHERE kunnr = '0000000006'.
+*
+*  WRITE : / lv_kunnr, lv_name1 , lv_ort01 , lv_land1.
+*
+*  ENDSELECT.
+*
+****# 2
+
+
+******# 2
+*TABLES kna1.
+*
+*data: lv_kunnr TYPE kna1-kunnr, " Customer Number
+*      lv_name1 type kna1-name1, " Name 1
+*      lv_ort01 TYPE kna1-ort01, " city
+*      lv_land1 TYPE kna1-land1. " country
+*
+*PARAMETERS p_kunnr TYPE kna1-kunnr.
+*
+*select kunnr name1 ort01 land1
+*       into ( lv_kunnr, lv_name1 , lv_ort01 , lv_land1 )
+*       from kna1
+*       WHERE kunnr = p_kunnr . """""'0000000006'.
+*
+*  WRITE : / lv_kunnr, lv_name1 , lv_ort01 , lv_land1.
+*
+*  ENDSELECT.
+
+
+******# 3
+**
+*TABLES kna1.
+*
+*DATA: lv_kunnr TYPE kna1-kunnr, " Customer Number
+*      lv_name1 TYPE kna1-name1, " Name 1
+*      lv_ort01 TYPE kna1-ort01, " city
+*      lv_land1 TYPE kna1-land1. " country
+*
+*****PARAMETERS p_kunnr TYPE kna1-kunnr.
+*
+*select-OPTIONS s_kunnr for lv_kunnr.
+*
+**********BREAK-POINT.
+*
+*SELECT kunnr name1 ort01 land1
+*       INTO ( lv_kunnr, lv_name1 , lv_ort01 , lv_land1 )
+*       FROM kna1
+****       WHERE kunnr = p_kunnr . """""'0000000006'.
+*        WHERE kunnr in s_kunnr . """""'0000000006'.
+*
+*  WRITE : / lv_kunnr, lv_name1 , lv_ort01 , lv_land1.
+*
+*ENDSELECT.
+*
+*
+*****# 4
+
+*TABLES kna1.
+*
+*DATA: lv_kunnr TYPE kna1-kunnr, " Customer Number
+*      lv_name1 TYPE kna1-name1, " Name 1
+*      lv_ort01 TYPE kna1-ort01, " city
+*      lv_land1 TYPE kna1-land1. " country
+*
+*
+*select-OPTIONS s_kunnr for lv_kunnr.  " 1  to 100
+*PARAMETERS p_land1 TYPE kna1-land1.  " us
+*
+*
+*SELECT kunnr name1 ort01 land1
+*       INTO ( lv_kunnr, lv_name1 , lv_ort01 , lv_land1 )
+*       FROM kna1
+*        wHERE kunnr in s_kunnr and
+*              land1 eq p_land1.
+*
+*  WRITE : / lv_kunnr, lv_name1 , lv_ort01 , lv_land1.
+*
+*ENDSELECT.
+
+
+*******# 5
+
+TABLES kna1.
+
+DATA:
+****************      lv_kunnr1(10) TYPE c,
+
+      lv_kunnr TYPE kunnr, " Customer Number
+      lv_name1 TYPE NAME1_GP, " Name 1
+      lv_ort01 TYPE ORT01_GP, " city
+      lv_land1 TYPE LAND1_GP. " country
+
+
+select-OPTIONS s_kunnr for lv_kunnr.  " 1  to 100
+PARAMETERS p_land1 TYPE kna1-land1.  " us
+
+
+SELECT kunnr name1 ort01 ORT01
+       INTO ( lv_kunnr, lv_name1 , lv_ort01 , lv_land1 )
+       FROM kna1
+        wHERE kunnr in s_kunnr and
+              land1 eq p_land1.
+
+  WRITE : / lv_kunnr, lv_name1 , lv_ort01 , lv_land1.
+
+ENDSELECT.

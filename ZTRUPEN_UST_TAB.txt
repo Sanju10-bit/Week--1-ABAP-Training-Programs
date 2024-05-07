@@ -1,0 +1,220 @@
+
+*&---------------------------------------------------------------------*
+*& Report ZTRUPEN_UST_TAB
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT ZTRUPEN_UST_TAB.
+
+*****# 1 no itab
+*
+*TABLES kna1.
+*
+*DATA: lv_kunnr TYPE kunnr, " Customer Number
+*      lv_name1 TYPE NAME1_GP, " Name 1
+*      lv_ort01 TYPE ORT01_GP, " city
+*      lv_land1 TYPE LAND1_GP. " country
+*
+*
+*select-OPTIONS s_kunnr for lv_kunnr.  " 1  to 100
+*PARAMETERS p_land1 TYPE kna1-land1.  " us
+*
+*
+*SELECT kunnr name1 ort01 ORT01
+*       INTO ( lv_kunnr, lv_name1 , lv_ort01 , lv_land1 )
+*       FROM kna1
+*        wHERE kunnr in s_kunnr and
+*              land1 eq p_land1.
+*
+*  WRITE : / lv_kunnr, lv_name1 , lv_ort01 , lv_land1.
+*
+*ENDSELECT.
+
+****# 2 with header line
+
+*
+*TABLES kna1.
+*
+*DATA: lt_tab type kna1 occurs 0 WITH HEADER LINE.
+******* in this case itab body and header names are same.
+*data lv_kunnr TYPE kunnr.
+*select-OPTIONS s_kunnr for lv_kunnr.  " 1  to 100
+*PARAMETERS p_land1 TYPE kna1-land1.  " us
+*
+*SELECT *
+*       INTO lt_Tab   " into header
+*       FROM kna1
+*        wHERE kunnr in s_kunnr and
+*              land1 eq p_land1.
+*
+* APPEND lt_tab to lt_tab.  " h to b
+*ENDSELECT.
+*
+*loop at lt_Tab INTO lt_Tab.  " b to h
+*
+* WRITE: / lt_tab-kunnr,   " h-f
+*          lt_tab-name1,
+*          lt_tab-ort01,
+*          lt_tab-land1.
+*
+*  ENDLOOP.
+
+
+
+
+****# 3   without header
+*
+*
+*TABLES kna1.
+*
+*DATA: lt_tab type kna1 occurs 0 WITH HEADER LINE.
+*
+******* in this case itab body and header names are same.
+*data lv_kunnr TYPE kunnr.
+*select-OPTIONS s_kunnr for lv_kunnr.  " 1  to 100
+*PARAMETERS p_land1 TYPE kna1-land1.  " us
+*
+*SELECT *
+********************        INTO lt_Tab   " into HEADER
+*       INTO TABLE  lt_Tab   " into ITAB BODY
+*       FROM kna1
+*        wHERE kunnr in s_kunnr and
+*              land1 eq p_land1.
+*
+************ APPEND lt_tab to lt_tab.  " h to b
+************ENDSELECT.
+*
+*loop at lt_Tab INTO lt_Tab.  " b to h
+*
+* WRITE: / lt_tab-kunnr,   " h-f
+*          lt_tab-name1,
+*          lt_tab-ort01,
+*          lt_tab-land1.
+*
+*  ENDLOOP.
+
+
+
+****# 4 WITH USER DEFINED WORK AREA
+
+
+*TABLES kna1.
+*
+*TYPES : BEGIN OF LS_TAB,
+*******************  KUNNR TYPE KNA1-KUNNR. " V TYPE T-F
+*      KUNNR TYPE KUNNR ,  "  V TYPE DTL.
+*      NAME1 TYPE NAME1_GP ,
+*      ORT01 TYPE ORT01_GP,
+*      LAND1 TYPE LAND1_GP,
+*      END OF LS_TAB.
+*
+*DATA : LT_tAB TYPE STANDARD TABLE OF LS_TAB, " ITAB
+*       WA_TAB TYPE LS_tAB.   " WORK AREA
+*
+*data lv_kunnr TYPE kunnr.
+*select-OPTIONS s_kunnr for lv_kunnr.  " 1  to 100
+*PARAMETERS p_land1 TYPE kna1-land1.  " us
+*
+*SELECT  KUNNR NAME1 ORT01 LAND1
+*       INTO WA_Tab   " into WORK AREA
+*       FROM kna1
+*        wHERE kunnr in s_kunnr and
+*              land1 eq p_land1.
+*
+* APPEND WA_tab to lt_tab.  " W to b
+* ENDSELECT.
+*
+*loop at lt_Tab INTO WA_Tab.  " b to W
+*
+* WRITE: / WA_tab-kunnr,   " W-f
+*          WA_tab-name1,
+*          WA_tab-ort01,
+*          WA_tab-land1.
+*
+*  ENDLOOP.
+
+
+*******************FINAL CODE *******************
+
+*
+*TABLES kna1.
+*
+*TYPES : BEGIN OF LS_TAB,   " LOCAL STRS
+*******************  KUNNR TYPE KNA1-KUNNR. " V TYPE T-F
+*      KUNNR TYPE KUNNR ,  "  V TYPE DTL.
+*      NAME1 TYPE NAME1_GP ,
+*      ORT01 TYPE ORT01_GP,
+*      LAND1 TYPE LAND1_GP,
+*      END OF LS_TAB.
+*
+*DATA : LT_tAB TYPE STANDARD TABLE OF LS_TAB, " ITAB
+*       WA_TAB TYPE LS_tAB.   " WORK AREA
+*
+*data lv_kunnr TYPE kunnr.
+*select-OPTIONS s_kunnr for lv_kunnr.  " 1  to 100
+*PARAMETERS p_land1 TYPE kna1-land1.  " us
+*
+*SELECT  KUNNR NAME1 ORT01 LAND1
+***********       INTO WA_Tab   " into WORK AREA
+*  INTO TABLE LT_tAB
+*       FROM kna1
+*        wHERE kunnr in s_kunnr and
+*              land1 eq p_land1.
+*
+************** APPEND WA_tab to lt_tab.  " W to b
+************** ENDSELECT.
+*
+*loop at lt_Tab INTO WA_Tab.  " b to W
+*
+* WRITE: / WA_tab-kunnr,   " W-f
+*          WA_tab-name1,
+*          WA_tab-ort01,
+*          WA_tab-land1.
+*
+*  ENDLOOP.
+
+
+
+
+
+*TABLES kna1.
+********
+********TYPES : BEGIN OF LS_TAB,   " LOCAL STRS
+**************************  KUNNR TYPE KNA1-KUNNR. " V TYPE T-F
+********      KUNNR TYPE KUNNR ,  "  V TYPE DTL.
+********      NAME1 TYPE NAME1_GP ,
+********      ORT01 TYPE ORT01_GP,
+********      LAND1 TYPE LAND1_GP,
+********      END OF LS_TAB.
+********
+
+******DATA : LT_tAB TYPE STANDARD TABLE OF LS_TAB, " ITAB
+******       WA_TAB TYPE LS_tAB.   " WORK AREA
+
+
+*****************TO REF GLOBAL STRS
+
+DATA : LT_tAB TYPE TABLE OF ZTRUPEN_STRS_CUST, " ITAB
+       WA_TAB TYPE ZTRUPEN_STRS_CUST.   " WORK AREA
+
+
+data lv_kunnr TYPE kunnr.
+select-OPTIONS s_kunnr for lv_kunnr.  " 1  to 100
+PARAMETERS p_land1 TYPE kna1-land1.  " us
+
+SELECT  KUNNR NAME1 ORT01 LAND1
+**********       INTO WA_Tab   " into WORK AREA
+  INTO TABLE LT_tAB
+       FROM kna1
+        wHERE kunnr in s_kunnr and
+              land1 eq p_land1.
+
+
+loop at lt_Tab INTO WA_Tab.  " b to W
+
+ WRITE: / WA_tab-kunnr,   " W-f
+          WA_tab-name1,
+          WA_tab-ort01,
+          WA_tab-land1.
+
+  ENDLOOP.

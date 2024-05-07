@@ -1,0 +1,86 @@
+*&---------------------------------------------------------------------*
+*& Report ZTRUPEN_UST_CTRLS
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+report ztrupen_ust_ctrls.
+
+******#1
+*
+*do 5 times.
+*  write / 'SAP UST GLOBAL'.
+*enddo.
+
+*****while
+*
+*data m type i VALUE 2.
+*
+*WHILE  m < 10.
+*
+*WRITE / m.
+*
+*m = m  + 1.
+*
+*ENDWHILE.
+
+
+****# 2
+*******EXIT /STOP.
+
+*do.
+*  write sy-index.
+*  if sy-index eq 10.
+**EXIT.
+*    stop.
+*  endif.
+*enddo.
+*write / 'SAP UST GLOBAL'.
+
+
+
+
+
+****# 3
+******CONTINUE
+*do.
+*  if sy-index eq 2.
+*    continue.
+*  endif.
+*
+*  write sy-index.
+*  if sy-index eq 10.
+*    exit.
+*  endif.
+*enddo.
+*write / 'SAP UST GLOBAL'.
+
+
+*
+******Check 4
+*do.
+*    write sy-index.
+*  if sy-index eq 10.
+*    exit.
+*  endif.
+*  CHECK sy-index eq 2.
+*    write sy-index.
+*enddo.
+*write / 'SAP UST GLOBAL'.
+
+
+
+********case
+*PARAMETERS p_val type i DEFAULT 2.
+*
+*CASE p_val.
+*  WHEN 1.
+*    WRITE : ' first val' , p_val.
+*  WHEN 2.
+*    WRITE :' second val' , p_val.
+*
+*  WHEN OTHERS.
+*    WRITE :' default val' , p_val.
+*
+*ENDCASE.
+*
+**WRITE  p_val.

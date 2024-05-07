@@ -1,0 +1,76 @@
+*&---------------------------------------------------------------------*
+*& Report ZTRUPEN_UST_BASICS
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+report ztrupen_ust_basics.
+*
+*data a type i VALUE 123.
+*WRITE a.
+
+
+**#1
+*data lv_a type i VALUE 123.
+*WRITE lv_a.
+
+**#2
+*data lv_a(20) type c VALUE 'ust hyd'.
+*WRITE lv_a.
+
+**#  3
+*data :lv_a TYPE i VALUE 10,
+*      lv_b TYPE i VALUE 20,
+*      lv_c TYPE i.
+*
+*lv_c =  lv_a + lv_b.
+*
+*WRITE: 'the value is' , lv_c.
+*
+*
+
+
+***#  4
+*PARAMETERS:  p_a TYPE i DEFAULT 10,
+*             p_b TYPE i DEFAULT 20.
+*
+*data  lv_c TYPE i.
+*
+*lv_c =  p_a + p_b.
+*
+*WRITE: 'the value is' , lv_c.
+
+
+*# 5
+
+*
+
+*# 6
+*
+*WRITE: 'The current date is' ,  sy-datum,
+*       'Time : '  , sy-uzeit,
+*       'sap user', sy-uname.
+
+
+*
+**CONSTANTS CS_ABC type i VALUE 210.
+**
+**cs_abc = 234.
+**WRITE cs_abc.
+*
+*
+
+****# 7
+
+data: begin of b1,  " FIELD STRING
+        empid       type i value  123,
+        empname(20) type c value 'UST',
+      end of b1.
+data: begin of b2,
+        empid        type i,
+        empaddrs(30) type c,
+        empname(20)  type c,
+
+      end of b2.
+      move b1 to b2.
+*move-corresponding b1 to b2.
+write :/ b2-empid , b2-empname , b2-empaddrs.
